@@ -1,6 +1,6 @@
-# Evelyn: Your Personal AI Dashboard ✨
+# Evelyn Extension: Your Personal AI Dashboard ✨
 
-**Evelyn** is a lightweight, local-first desktop application built with Python and Eel. It serves as a personal assistant and productivity hub, featuring a custom AI companion, task management, and quick-launch capabilities—all while keeping your data stored locally.
+**Evelyn Extension** is a lightweight, local-first desktop application built with Python and Eel. It serves as a personal assistant and productivity hub, featuring a custom AI companion, task management, and quick-launch capabilities—all while keeping your data stored locally.
 
 ## 🚀 Features
 
