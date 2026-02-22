@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Companion Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Floating Sparkles / Decor -->
+        <div class="decor decor-1">✨</div>
+        <div class="decor decor-2">☁️</div>
+
+        <header class="card float-card">
+            <div class="header-content">
+                <img src="img/avatar.svg" alt="Cute Avatar" class="avatar bounce" id="header-avatar">
+                <div>
+                    <h1 id="greeting">Good Morning, Manvi!</h1>
+                    <p id="datetime" class="subtitle">Loading time...</p>
+                </div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button id="open-email-btn" class="squash small-btn" title="Email Assistant"
+                    style="font-size:1.5rem; width:45px; height:45px;">✉️</button>
+                <button id="open-settings-btn" class="squash small-btn" title="Settings"
+                    style="font-size:1.5rem; width:45px; height:45px;">⚙️</button>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Left Column: Mood, Focus, Todo -->
+            <div class="left-col">
+                <section class="card focus-card">
+                    <h2>Daily Focus 🎯</h2>
+                    <input type="text" id="daily-focus" placeholder="What's your #1 goal today?" autocomplete="off">
+                </section>
+
+                <section class="card todo-card">
+                    <h2>To-Do List ✅</h2>
+                    <div class="todo-input-area">
+                        <input type="text" id="todo-input" placeholder="Add a new task..." autocomplete="off">
+                        <button id="add-todo-btn" class="squash">Add</button>
+                    </div>
+                    <ul id="todo-list" class="todo-list">
+                        <!-- Todos injected here -->
+                    </ul>
+                </section>
+
+                <section class="card mood-card">
+                    <h2>How are you feeling?</h2>
+                    <div class="mood-tracker">
+                        <button class="mood-btn squash" data-mood="😫">😫</button>
+                        <button class="mood-btn squash" data-mood="😔">😔</button>
+                        <button class="mood-btn squash" data-mood="😐">😐</button>
+                        <button class="mood-btn squash" data-mood="😊">😊</button>
+                        <button class="mood-btn squash" data-mood="🥰">🥰</button>
+                    </div>
+                    <p id="mood-response" class="subtitle"
+                        style="text-align:center; margin-top:15px; min-height:1.5em; font-size: 0.95rem; color:#4a4e69; font-weight: bold;">
+                    </p>
+                </section>
+
+                <section class="card links-card">
+                    <div class="links-header">
+                        <h2>Your Portal 🚀</h2>
+                        <button id="open-link-modal-btn" class="squash small-btn">+</button>
+                    </div>
+                    <div class="links-grid" id="links-container">
+                        <!-- Links injected here by JS -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: AI Evelyn, Utilities -->
+            <div class="right-col">
+                <section class="card ai-card">
+                    <div class="ai-header"
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                        <h2 style="margin-bottom:0;">Chat with Evelyn 🌸</h2>
+                        <button id="clear-chat-btn" class="squash small-btn" title="Clear Chat">🗑️</button>
+                    </div>
+                    <div class="chat-window" id="chat-window">
+                        <!-- Messages injected here -->
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Ask Evelyn something..." spellcheck="false"
+                            autocomplete="off">
+                        <button id="send-btn" class="squash">Send</button>
+                    </div>
+                </section>
+
+                <section class="card utilities-card">
+                    <h2>Utilities ⏰</h2>
+                    <div class="utilities-grid">
+                        <div class="timer-box">
+                            <h3>Timer</h3>
+                            <input type="number" id="timer-input" placeholder="Min" min="1" max="60">
+                            <button id="timer-btn" class="squash">Start</button>
+                            <div id="timer-display">00:00</div>
+                        </div>
+                        <div class="alarm-box">
+                            <h3>Alarm</h3>
+                            <input type="time" id="alarm-input">
+                            <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                <button id="alarm-btn" class="squash" style="flex-grow:1; margin-bottom:0;">Set
+                                    Alarm</button>
+                                <button id="test-alarm-btn" class="squash" style="margin-bottom:0; padding:0 15px;"
+                                    title="Test Sound">🔊</button>
+                            </div>
+                            <div id="alarm-display">Not Set</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Link/App Modal -->
+    <div id="link-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h2>Add New Portal Entry</h2>
+
+            <div style="display:flex; gap:15px; justify-content:center; margin-bottom:10px;">
+                <label style="cursor:pointer;"><input type="radio" name="link-type" value="web" checked id="type-web">
+                    Website</label>
+                <label style="cursor:pointer;"><input type="radio" name="link-type" value="app" id="type-app"> Local
+                    .exe</label>
+            </div>
+
+            <input type="text" id="link-title" placeholder="Name (e.g. Netflix, Word)">
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="link-url" placeholder="https://..." style="flex-grow:1;">
+                <button id="browse-exe-btn" class="squash hidden"
+                    style="background: rgba(255,255,255,0.6); border:none; border-radius:15px; padding:0 15px; font-weight:bold; cursor:pointer;"
+                    title="Browse for .exe">📁</button>
+            </div>
+            <input type="url" id="link-icon" placeholder="Image URL (e.g. logo.png)">
+            <div class="modal-actions">
+                <button id="close-modal-btn" class="squash modal-cancel">Cancel</button>
+                <button id="save-link-btn" class="squash">Save Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width:500px; text-align:left;">
+            <h2 style="text-align:center;">Settings ⚙️</h2>
+
+            <label><strong>Your Name</strong></label>
+            <input type="text" id="set-username" placeholder="Manvi">
+
+            <label><strong>AI Name</strong></label>
+            <input type="text" id="set-ainame" placeholder="Evelyn">
+
+            <label><strong>System Prompt</strong> (How should the AI act?)</label>
+            <textarea id="set-prompt" rows="3"
+                style="width:100%; border-radius:15px; padding:10px; border:2px solid rgba(255,255,255,0.6); background:rgba(255,255,255,0.4); outline:none; font-family:inherit; resize:vertical;"></textarea>
+
+            <label><strong>SMTP Email (Gmail Auth)</strong></label>
+            <input type="email" id="set-smtp-email" placeholder="you@gmail.com">
+
+            <label><strong>SMTP App Password</strong></label>
+            <input type="password" id="set-smtp-pass" placeholder="16-letter App Password"
+                style="width:100%; padding:12px 15px; border-radius:15px; border:2px solid rgba(255,255,255,0.6); background:rgba(255,255,255,0.4); outline:none;">
+
+            <div class="modal-actions" style="margin-top:20px;">
+                <button id="close-settings-btn" class="squash modal-cancel">Cancel</button>
+                <button id="save-settings-btn" class="squash">Apply Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Assistant Modal -->
+    <div id="email-modal" class="modal-overlay hidden">
+        <div class="modal-card" style="max-width:550px; text-align:left;">
+            <h2 style="text-align:center;">AI Email Assistant ✉️</h2>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <label><strong>To</strong></label>
+                <input type="email" id="email-to" placeholder="To: email@example.com">
+
+                <label><strong>AI Prompt</strong></label>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="email-prompt" placeholder="Ask AI to write: 'A polite sick leave email'"
+                        style="flex-grow:1;">
+                    <button id="email-ai-btn" class="squash"
+                        style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); border:none; border-radius:15px; padding:0 15px; color:white; font-weight:bold; cursor:pointer;">Draft
+                        w/ AI</button>
+                </div>
+
+                <label><strong>Subject</strong></label>
+                <input type="text" id="email-subj" placeholder="Subject">
+
+                <label><strong>Message Body</strong></label>
+                <textarea id="email-body" rows="6" placeholder="Message body..."></textarea>
+
+                <div class="modal-actions" style="margin-top:15px;">
+                    <button id="close-email-btn" class="squash modal-cancel">Cancel</button>
+                    <button id="email-send-btn" class="squash">Send Email 🚀</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alarm Audio -->
+    <audio id="alarm-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"
+        preload="auto"></audio>
+
+    <!-- Include eel.js -->
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
