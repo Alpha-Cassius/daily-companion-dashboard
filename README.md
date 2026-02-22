@@ -8,7 +8,7 @@
 * **Smart Bookmarks**: Save and manage your favorite web links or application shortcuts with custom icons.
 * **Task Manager (To-Do)**: A persistent CSV-based task list to keep you on track.
 * **Mood Tracking**: Log your daily mood to visualize your history.
-* **System Integration**:
+* **System Integration**: You Try to integrate it.
 * **App Launcher**: Select and launch `.exe` files directly from the dashboard.
 * **Email Integration**: Send quick emails via SMTP (Gmail supported).
 
